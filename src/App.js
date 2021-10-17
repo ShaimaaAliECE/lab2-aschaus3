@@ -1,25 +1,51 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'; 
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default class App extends React.Component
+{
+  state = {
+    rows: 6,
+    columns: 7,
+  }
+
+
+  
+  renderBoard() //Builds the board
+  {
+    const { rows, columns } = this.state;
+    const rowsViews = [];
+
+    for(let row = 0; row < this.state.rows; row += 1) //Loop that will go up to 6
+    {
+      const columnViews = [];
+      for(var column = 0; column < this.state.columns; column += 1) //Loop that will go up to 7
+      {
+        columnViews.push( //Setting the columns
+          <div style={{width: 100, height: 100, backgroundColor: 'black', border: '1px solid white'}}> </div>)
+      };
+      rowsViews.push( //Setting the rows
+        <div style={{ display: 'flex', flexDirection: 'row'}}>{columnViews} </div>
+      );
+    }
+    return(
+      <div style={{ backgroundColor: 'red' , width: 400, height: 400}} > 
+          {rowsViews}
+      </div>
+  )
+  } 
+
+  render(){
+    const { style } = this.props;
+
+    return(
+      <div style = {style ? Object.assign({}, styles.container, style) : styles.container}> 
+        {this.renderBoard()}
+      </div>
+    );
+  }
 }
 
-export default App;
+const styles = {
+  container: {
+    padding: 5,
+  }
+};
