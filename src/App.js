@@ -1,4 +1,5 @@
 import React from 'react'; 
+import './App.css';
 
 export default class App extends React.Component
 {
@@ -27,7 +28,7 @@ export default class App extends React.Component
       );
     }
     return(
-      <div style={{ backgroundColor: 'red' , width: 400, height: 400}} > 
+      <div style={{ backgroundColor: 'red' , display: 'flex', flexDirection: 'column'}} > 
           {rowsViews}
       </div>
   )
@@ -46,6 +47,10 @@ export default class App extends React.Component
 
 const styles = {
   container: {
+    height: '100%',
     padding: 5,
+    display: 'flex', 
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 };
