@@ -17,7 +17,7 @@ export default class App extends React.Component
     count = 0;
   }
 
-  getPeice = (x,y) => {
+  getPeice = (x,y) => { //Checks if there a square has a peice in it
     const list = this.state.moves.filter((item) => {
       return (item.x === x && item.y === y);
     });
@@ -28,7 +28,7 @@ export default class App extends React.Component
   checkForWin = (x,y, player) =>  //Functions checks for a winner by checking every time a move is made, it checks if the same colour is on either side or above or below
   {
     let winnigMoves = [{ x, y }];
-    for(let column = x+1; column < x+4; column++)
+    for(let column = x+1; column < x+4; column++) //Checks the 3 spaces to the right 
     {
       const checkPeice = this.getPeice(column, y);
       if(checkPeice && checkPeice.player === player){
@@ -39,7 +39,7 @@ export default class App extends React.Component
       } 
     }
 
-    for(let column = x-1; column > x-4; column--)
+    for(let column = x-1; column > x-4; column--)//Checks the 3 spaces to the left
     {
       const checkPeice = this.getPeice(column, y);
       if(checkPeice && checkPeice.player === player){
@@ -50,13 +50,13 @@ export default class App extends React.Component
       } 
     }
 
-    if(winnigMoves.length > 3)
+    if(winnigMoves.length > 3) //Checks if there is a winner to the right or left
     {
       this.setState({winner: player, winnigMoves});
     }
 
     winnigMoves = [{ x, y }];
-    for(let row = y+1; row < y+4; row++)
+    for(let row = y+1; row < y+4; row++) //Checks the 3 spaces above
     {
       const checkPeice = this.getPeice(x, row);
       if(checkPeice && checkPeice.player === player){
@@ -67,7 +67,7 @@ export default class App extends React.Component
       } 
     }
 
-    for(let row = y-1; row > y-4; row--)
+    for(let row = y-1; row > y-4; row--) //Checks the 3 spaces below
     {
       const checkPeice = this.getPeice(x, row);
       if(checkPeice && checkPeice.player === player){
@@ -85,7 +85,7 @@ export default class App extends React.Component
  
   }
 
-  addMove = (x, y) => {
+  addMove = (x, y) => { //This adds red or yellow to an empty button
 
     const { playerTurn } = this.state;
     const nextPlayerTurn = playerTurn === 'red' ? 'yellow' : 'red'; //Switches player turn between red and yellow
@@ -99,14 +99,13 @@ export default class App extends React.Component
       }
     }
 
-    if(availableYPosition !== null)
+    if(availableYPosition !== null) //If there is an open position in the clicked on column
     {
       this.setState({ moves: this.state.moves.concat({x, y: availableYPosition, player: playerTurn}), playerTurn: nextPlayerTurn}, () => this.checkForWin(x,availableYPosition,playerTurn)); //Adds a move to our state and changes player turn to the next player
-      count++;
-      console.log(count);
+      count++; //Used to determine when theres a draw, addes one every time a peice is placed
     }
 
-    if(count === 42)
+    if(count === 42) //Sets the state of draw to true
     {
       this.setState({draw: true});
     }
@@ -138,13 +137,13 @@ export default class App extends React.Component
     return(
       <div style={{ backgroundColor: 'red' , display: 'flex', flexDirection: 'column'}} > 
           {winner && <div onClick={this.resetBoard} style={{position: 'absolute', zIndex: 3, left: 0, right: 0, bottom: 0, top: 0, backgroundColor: 'blue',
-           justifyContent: 'center',display: 'flex', alignItems: 'center'}}>WIN!! click to reset</div>}
+           justifyContent: 'center',display: 'flex', alignItems: 'center'}}>WIN!! click to reset</div>} 
            {draw && <div onClick={this.resetBoard} style={{position: 'absolute', zIndex: 3, left: 0, right: 0, bottom: 0, top: 0, backgroundColor: 'blue',
            justifyContent: 'center',display: 'flex', alignItems: 'center'}}>DRAW click to reset</div>}
           {rowsViews}
       </div>
   )
-  } 
+  } //Makes the winner or draw screen
 
   render(){
     const { style } = this.props;
@@ -154,7 +153,7 @@ export default class App extends React.Component
         {this.renderBoard()}
         <button onClick={this.resetBoard} style={{padding: 5}}>Clear Board</button> 
       </div>
-    );
+    ); //Renders the board and the resetBoard button
   }
 }
 
